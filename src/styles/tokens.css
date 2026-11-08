@@ -1,0 +1,142 @@
+/*
+ * Design tokens. Every colour, size and duration the interface uses is named
+ * here. Components read these through the Tailwind theme in globals.css.
+ */
+
+:root {
+  --ds-font-ui: var(--font-instrument-sans), system-ui, sans-serif;
+  --ds-font-display: var(--font-newsreader), Georgia, serif;
+
+  --ds-text-xs: 0.75rem;
+  --ds-text-sm: 0.875rem;
+  --ds-text-base: 1rem;
+  --ds-text-lg: 1.125rem;
+  --ds-text-xl: 1.375rem;
+  --ds-text-2xl: 1.75rem;
+  --ds-text-3xl: 2.25rem;
+  --ds-text-4xl: 3.25rem;
+
+  --ds-radius-sm: 0.25rem;
+  --ds-radius-md: 0.5rem;
+  --ds-radius-lg: 0.75rem;
+  --ds-radius-xl: 1rem;
+
+  --ds-z-sticky: 10;
+  --ds-z-header: 20;
+  --ds-z-overlay: 40;
+  --ds-z-dialog: 50;
+  --ds-z-toast: 60;
+
+  --ds-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ds-duration-fast: 120ms;
+  --ds-duration-base: 200ms;
+  --ds-duration-slow: 320ms;
+
+  --ds-control-height: 2.75rem;
+}
+
+:root[data-density='compact'] {
+  --ds-control-height: 2.25rem;
+}
+
+@media (pointer: coarse) {
+  :root[data-density='compact'] {
+    --ds-control-height: 2.75rem;
+  }
+}
+
+:root[data-script='arabic'] {
+  --ds-font-ui: var(--font-vazirmatn), var(--font-instrument-sans), system-ui, sans-serif;
+  --ds-font-display: var(--font-vazirmatn), var(--font-instrument-sans), system-ui, sans-serif;
+}
+
+:root,
+:root[data-theme='light'] {
+  --ds-canvas: #f5f6f8;
+  --ds-surface: #ffffff;
+  --ds-sunken: #edeff3;
+  --ds-line: #dde0e7;
+  --ds-line-strong: #c3c8d3;
+  --ds-ink: #14171f;
+  --ds-ink-muted: #4a5160;
+  --ds-ink-subtle: #636b7b;
+  --ds-danger: #b42318;
+  --ds-warning: #8a5a00;
+  --ds-success: #14703a;
+  --ds-shadow-raised: 0 1px 2px rgb(20 23 31 / 0.06), 0 0 0 1px rgb(20 23 31 / 0.03);
+  --ds-shadow-overlay: 0 12px 32px rgb(20 23 31 / 0.14), 0 0 0 1px rgb(20 23 31 / 0.06);
+}
+
+:root[data-theme='dark'] {
+  --ds-canvas: #0e1117;
+  --ds-surface: #151a23;
+  --ds-sunken: #0a0d12;
+  --ds-line: #252c39;
+  --ds-line-strong: #384154;
+  --ds-ink: #eef0f5;
+  --ds-ink-muted: #b4bbc9;
+  --ds-ink-subtle: #8f98aa;
+  --ds-danger: #ff8a80;
+  --ds-warning: #f5c15c;
+  --ds-success: #5ed68a;
+  --ds-shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4), 0 0 0 1px rgb(255 255 255 / 0.03);
+  --ds-shadow-overlay: 0 16px 40px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
+:root,
+:root[data-accent='cobalt'] {
+  --ds-accent: #3446d9;
+  --ds-accent-fg: #ffffff;
+}
+:root[data-accent='violet'] {
+  --ds-accent: #6d3fd0;
+  --ds-accent-fg: #ffffff;
+}
+:root[data-accent='teal'] {
+  --ds-accent: #0b7a75;
+  --ds-accent-fg: #ffffff;
+}
+:root[data-accent='amber'] {
+  --ds-accent: #a15c00;
+  --ds-accent-fg: #ffffff;
+}
+:root[data-accent='rose'] {
+  --ds-accent: #c02652;
+  --ds-accent-fg: #ffffff;
+}
+
+:root[data-theme='dark'],
+:root[data-theme='dark'][data-accent='cobalt'] {
+  --ds-accent: #8e9bff;
+  --ds-accent-fg: #0e1117;
+}
+:root[data-theme='dark'][data-accent='violet'] {
+  --ds-accent: #b79cff;
+  --ds-accent-fg: #0e1117;
+}
+:root[data-theme='dark'][data-accent='teal'] {
+  --ds-accent: #4fd1c5;
+  --ds-accent-fg: #0e1117;
+}
+:root[data-theme='dark'][data-accent='amber'] {
+  --ds-accent: #f2b04a;
+  --ds-accent-fg: #0e1117;
+}
+:root[data-theme='dark'][data-accent='rose'] {
+  --ds-accent: #ff8fad;
+  --ds-accent-fg: #0e1117;
+}
+
+:root[data-motion='reduce'] {
+  --ds-duration-fast: 0.01ms;
+  --ds-duration-base: 0.01ms;
+  --ds-duration-slow: 0.01ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-motion='full'] {
+    --ds-duration-fast: 0.01ms;
+    --ds-duration-base: 0.01ms;
+    --ds-duration-slow: 0.01ms;
+  }
+}
