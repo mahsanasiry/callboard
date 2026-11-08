@@ -1,0 +1,80 @@
+{
+  "Meta": {
+    "title": "Callboard",
+    "description": "Plan shoot days, assign crew and gear, and keep every call time current, even when the signal on location is weak."
+  },
+  "Common": {
+    "appName": "Callboard",
+    "skipToContent": "Skip to content",
+    "language": "Language",
+    "mainNavigation": "Main navigation",
+    "designSystem": "Design system",
+    "backHome": "Back to home"
+  },
+  "Landing": {
+    "title": "The whole shoot, on one timeline.",
+    "lede": "Callboard helps small crews plan shoot days, assign people and gear, and keep call times current, even when the signal on location is weak.",
+    "cta": "Explore the design system",
+    "sample": {
+      "label": "A one-day schedule with three crew lanes, a marker for the current time and one double-booked person.",
+      "camera": "Camera",
+      "sound": "Sound",
+      "art": "Art",
+      "lensTest": "Lens test",
+      "sceneTwelve": "Scene 12",
+      "boomSetup": "Boom setup",
+      "setDressing": "Set dressing",
+      "propPickup": "Prop pickup",
+      "now": "Now",
+      "conflict": "Double-booked"
+    }
+  },
+  "Design": {
+    "title": "Design system",
+    "intro": "Every colour, size and duration in Callboard comes from a named token. This page shows them in the active theme, so changing a preference below updates everything at once.",
+    "preferences": "Display preferences",
+    "colors": "Colour",
+    "typography": "Typography",
+    "typographySample": "Review tomorrow's schedule and confirm your call time.",
+    "displayFace": "Display",
+    "interfaceFace": "Interface",
+    "radius": "Corner radius",
+    "controls": "Controls",
+    "primaryAction": "Save changes",
+    "textField": "Text field"
+  },
+  "Theme": {
+    "mode": {
+      "label": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "Match system"
+    },
+    "accent": {
+      "label": "Accent colour",
+      "cobalt": "Cobalt",
+      "violet": "Violet",
+      "teal": "Teal",
+      "amber": "Amber",
+      "rose": "Rose"
+    },
+    "density": {
+      "label": "Density",
+      "comfortable": "Comfortable",
+      "compact": "Compact"
+    },
+    "motion": {
+      "label": "Motion",
+      "system": "Match system",
+      "reduce": "Reduce",
+      "full": "Full"
+    }
+  },
+  "Errors": {
+    "title": "This page didn't load",
+    "body": "Something went wrong on our side. Your data is safe. Try again, and if it keeps happening, come back in a few minutes.",
+    "retry": "Try again",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you're looking for doesn't exist or has moved."
+  }
+}
