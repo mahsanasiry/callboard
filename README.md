@@ -6,15 +6,14 @@ A production-planning workspace for small film, event and photo-shoot crews. A p
 
 ## Status
 
-This repository is built in phases. Right now only the foundation is in place:
+This repository is built in phases. Done so far:
 
-- Next.js App Router, React and strict TypeScript, with Tailwind driven by design tokens
-- Light and dark themes, five accent colours, two densities and a reduced-motion option, applied before first paint
-- Locale routing with English and Persian, right-to-left layout through logical properties, and typed message keys
-- A design-system page at `/en/design` that shows the tokens in the active theme
-- A locale completeness check, a logical-property check, unit tests and a CI workflow
+- Foundation: Next.js App Router, strict TypeScript, Tailwind driven by design tokens, themes, locale routing for English and Persian with right-to-left layout, and a design-system page at `/en/design`
+- Database: schema, row level security and migrations for organisations, members, productions, shoot days, schedule blocks, locations, crew, equipment, comments and attachments
+- Permissions: one typed policy module shared by the database tests, the server and the interface, with a generated role matrix
+- Quality gates: lint, logical-property check, locale completeness check, unit tests, database tests and a CI workflow
 
-Not built yet: authentication, the database, the schedule, offline support, the remaining twenty languages, end-to-end tests. They are listed in the roadmap and nothing in this README claims them.
+Not built yet: authentication, the application screens, the schedule timeline, real-time updates, offline support, the remaining twenty languages, end-to-end tests. They are in the roadmap and nothing in this README claims them.
 
 ## Requirements
 
@@ -42,6 +41,14 @@ Open http://localhost:3000. Copy `.env.example` to `.env.local` if you need to c
 | `pnpm i18n:check`   | Every locale has every key, valid ICU syntax, matching placeholders and plurals |
 | `pnpm test`         | Unit and component tests                                                        |
 | `pnpm verify`       | All of the above plus a build, the same sequence CI runs                        |
+
+## Database
+
+The migrations in `supabase/migrations` are plain SQL and run unchanged on Supabase. The data model is described in [`docs/data-model.md`](docs/data-model.md) and the role matrix in [`docs/rbac-matrix.md`](docs/rbac-matrix.md).
+
+`pnpm test` also runs the database suite. It loads the migrations into an in-process Postgres (PGlite), so no Docker or local database is needed. The suite proves that every table has row level security, that organisations and roles cannot see each other's data, and that the database allows exactly what the shared policy says it should.
+
+To apply the migrations to a Supabase project, open the SQL editor, paste the contents of each file in `supabase/migrations` in filename order and run it.
 
 ## Decisions
 
