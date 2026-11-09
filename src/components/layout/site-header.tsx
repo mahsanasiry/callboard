@@ -21,14 +21,14 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-canvas/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-5">
         <Link href="/" className="inline-flex items-center gap-2.5 no-underline">
           <Wordmark />
           <span className="font-display text-xl font-semibold" dir="ltr">
             {t('appName')}
           </span>
         </Link>
-        <nav aria-label={t('mainNavigation')} className="flex items-center gap-5">
+        <nav aria-label={t('mainNavigation')} className="flex items-center gap-3 sm:gap-5">
           <Link href="/design" className="text-sm text-ink-muted hover:text-ink">
             {t('designSystem')}
           </Link>

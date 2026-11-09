@@ -21,7 +21,7 @@ export function LocaleSwitcher() {
 
   return (
     <label className="inline-flex items-center gap-2 text-sm">
-      <span className="text-ink-muted">{t('language')}</span>
+      <span className="sr-only text-ink-muted sm:not-sr-only">{t('language')}</span>
       <select
         value={locale}
         disabled={isPending}

@@ -5,6 +5,7 @@ interface SketchBlock {
   startHour: number;
   endHour: number;
   conflict?: true;
+  row?: 'upper' | 'lower';
 }
 
 interface SketchLane {
@@ -14,8 +15,9 @@ interface SketchLane {
 
 const DAY_START = 8;
 const DAY_END = 16;
-const NOW = 10.75;
+const NOW = 9.75;
 const TICKS = [8, 10, 12, 14, 16];
+const TICKS_HIDDEN_ON_NARROW = new Set([10, 14]);
 
 const LANES: SketchLane[] = [
   {
@@ -35,14 +37,33 @@ const LANES: SketchLane[] = [
   {
     name: 'art',
     blocks: [
-      { label: 'setDressing', startHour: 8, endHour: 11.5, conflict: true },
-      { label: 'propPickup', startHour: 10.5, endHour: 12.5, conflict: true },
+      { label: 'setDressing', startHour: 8, endHour: 11.5, conflict: true, row: 'upper' },
+      { label: 'propPickup', startHour: 10.5, endHour: 12.5, conflict: true, row: 'lower' },
     ],
   },
 ];
 
 function percent(hour: number): number {
   return ((hour - DAY_START) / (DAY_END - DAY_START)) * 100;
+}
+
+function tickAlignment(index: number): string {
+  if (index === 0) return 'justify-start';
+  if (index === TICKS.length - 1) return 'justify-end';
+  return 'justify-center';
+}
+
+function blockClasses(block: SketchBlock): string {
+  const placement =
+    block.row === 'upper'
+      ? 'top-1 h-[calc(50%-0.25rem)] truncate'
+      : block.row === 'lower'
+        ? 'bottom-1 h-[calc(50%-0.25rem)] truncate'
+        : 'inset-y-1';
+  const tone = block.conflict
+    ? 'stripes border-danger bg-surface'
+    : 'border-line-strong border-s-accent bg-surface border-s-4';
+  return `absolute z-10 overflow-hidden rounded-sm border px-2 py-0.5 text-xs leading-tight font-medium ${placement} ${tone}`;
 }
 
 export async function ScheduleSketch() {
@@ -61,29 +82,38 @@ export async function ScheduleSketch() {
       aria-label={t('label')}
       className="rounded-xl border border-line bg-surface p-4 shadow-raised sm:p-5"
     >
-      <div className="ps-20 sm:ps-24" aria-hidden="true">
-        <div className="flex justify-between text-xs text-ink-subtle">
-          {TICKS.map((hour) => (
-            <span key={hour}>{hourLabel(hour)}</span>
+      <div
+        aria-hidden="true"
+        className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-3 gap-y-2 sm:grid-cols-[5.5rem_minmax(0,1fr)]"
+      >
+        <div className="relative h-5 text-xs text-ink-subtle" style={{ gridColumn: 2, gridRow: 1 }}>
+          {TICKS.map((hour, index) => (
+            <span
+              key={hour}
+              className={`absolute w-0 whitespace-nowrap ${TICKS_HIDDEN_ON_NARROW.has(hour) ? 'hidden sm:flex' : 'flex'} ${tickAlignment(index)}`}
+              style={{ insetInlineStart: `${percent(hour)}%` }}
+            >
+              {hourLabel(hour)}
+            </span>
           ))}
         </div>
-      </div>
 
-      <div className="relative mt-3 flex flex-col gap-2" aria-hidden="true">
-        {LANES.map((lane) => (
-          <div key={lane.name} className="flex items-center gap-3">
-            <span className="w-17 shrink-0 text-sm font-medium text-ink-muted sm:w-21">
+        {LANES.map((lane, index) => (
+          <div key={lane.name} className="contents">
+            <span
+              className="self-center text-sm font-medium text-ink-muted"
+              style={{ gridColumn: 1, gridRow: index + 2 }}
+            >
               {t(lane.name)}
             </span>
-            <div className="relative h-14 flex-1 rounded-md bg-sunken">
+            <div
+              className="relative h-14 rounded-md bg-sunken"
+              style={{ gridColumn: 2, gridRow: index + 2 }}
+            >
               {lane.blocks.map((block) => (
                 <div
                   key={block.label}
-                  className={`inset-block-1 absolute overflow-hidden rounded-sm border px-2 py-1 text-xs leading-tight font-medium ${
-                    block.conflict
-                      ? 'stripes border-danger bg-surface'
-                      : 'border-s-4 border-line-strong border-s-accent bg-surface'
-                  } ${block.label === 'propPickup' ? 'mt-5 h-[calc(100%-1.5rem)]' : ''}`}
+                  className={blockClasses(block)}
                   style={{
                     insetInlineStart: `${percent(block.startHour)}%`,
                     inlineSize: `${percent(block.endHour) - percent(block.startHour)}%`,
@@ -96,22 +126,29 @@ export async function ScheduleSketch() {
           </div>
         ))}
 
+        <div className="h-6" style={{ gridColumn: 2, gridRow: LANES.length + 2 }} />
+
         <div
-          className="pointer-events-none absolute inset-y-0 w-px bg-accent"
-          style={{
-            insetInlineStart: `calc(4.25rem + 0.75rem + (100% - 5rem) * ${percent(NOW) / 100})`,
-          }}
+          className="pointer-events-none relative z-1"
+          style={{ gridColumn: 2, gridRow: `2 / span ${LANES.length + 1}` }}
         >
-          <span className="absolute start-1/2 -top-2 -translate-x-1/2 rounded-sm bg-accent px-1.5 py-0.5 text-xs whitespace-nowrap text-accent-fg">
-            {t('now')}
+          <div
+            className="absolute inset-y-0 w-px bg-accent"
+            style={{ insetInlineStart: `${percent(NOW)}%` }}
+          />
+          <span
+            className="absolute bottom-0 flex w-0 justify-center text-xs whitespace-nowrap"
+            style={{ insetInlineStart: `${percent(NOW)}%` }}
+          >
+            <span className="rounded-sm bg-accent px-1.5 py-0.5 text-accent-fg">{t('now')}</span>
           </span>
         </div>
       </div>
 
-      <figcaption className="mt-4 flex items-center gap-2 text-sm text-danger" aria-hidden="true">
+      <p className="mt-4 flex items-center gap-2 text-sm text-danger" aria-hidden="true">
         <span className="stripes size-4 rounded-sm border border-danger" />
         {t('conflict')}
-      </figcaption>
+      </p>
     </figure>
   );
 }
