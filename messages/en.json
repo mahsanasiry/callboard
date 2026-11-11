@@ -9,7 +9,8 @@
     "language": "Language",
     "mainNavigation": "Main navigation",
     "designSystem": "Design system",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "signIn": "Sign in"
   },
   "Landing": {
     "title": "The whole shoot, on one timeline.",
@@ -76,5 +77,178 @@
     "retry": "Try again",
     "notFoundTitle": "Page not found",
     "notFoundBody": "The page you're looking for doesn't exist or has moved."
+  },
+  "Validation": {
+    "required": "This field is required.",
+    "invalid": "Check this value and try again.",
+    "email": {
+      "invalid": "Enter a valid email address."
+    },
+    "name": {
+      "tooLong": "Use 80 characters or fewer."
+    },
+    "password": {
+      "tooShort": "Use at least {min, number} characters.",
+      "tooLong": "Use {max, number} characters or fewer.",
+      "mismatch": "The two passwords don't match."
+    },
+    "organization": {
+      "tooLong": "Use 120 characters or fewer."
+    }
+  },
+  "Auth": {
+    "email": "Email",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "login": {
+      "title": "Sign in",
+      "intro": "Welcome back. Pick up where the schedule left off.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "forgot": "Forgot your password?",
+      "noAccount": "New to Callboard?",
+      "createAccount": "Create an account"
+    },
+    "demo": {
+      "title": "Explore without an account",
+      "intro": "Sign in as one of the demo roles to see how the same organization looks to each person on the crew.",
+      "signInAs": "Sign in as {role}",
+      "working": "Signing in…"
+    },
+    "signup": {
+      "title": "Create your account",
+      "intro": "Start planning shoot days in a few minutes.",
+      "name": "Your name",
+      "passwordHint": "Use at least {min, number} characters. A short sentence works well.",
+      "confirmPassword": "Confirm password",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "intro": "Enter the email you signed up with and we'll send you a link to choose a new password.",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "submit": "Update password",
+      "submitting": "Updating…",
+      "expiredTitle": "This link has expired",
+      "expiredBody": "Reset links work once and only for a short time. Request a new one to continue.",
+      "requestNew": "Request a new link"
+    },
+    "checkEmail": {
+      "title": "Check your email",
+      "signup": "We sent a confirmation link to your inbox. Open it to finish creating your account.",
+      "recovery": "If an account exists for that address, a reset link is on its way. It can take a minute to arrive.",
+      "back": "Back to sign in"
+    },
+    "errors": {
+      "invalidCredentials": "That email and password don't match. Check them and try again.",
+      "emailNotConfirmed": "Confirm your email first. The link is in the message we sent you.",
+      "rateLimited": "Too many attempts. Wait a few minutes and try again.",
+      "weakPassword": "That password is too easy to guess. Try a longer one.",
+      "signupDisabled": "New sign-ups are turned off right now.",
+      "sessionExpired": "Your session has ended. Sign in again to continue.",
+      "confirmationFailed": "That confirmation link isn't valid any more. Request a new one.",
+      "demoUnavailable": "Demo sign-in isn't available right now.",
+      "generic": "Something went wrong on our side. Try again in a moment."
+    }
+  },
+  "Roles": {
+    "owner": "Owner",
+    "producer": "Producer",
+    "department_lead": "Department lead",
+    "crew": "Crew",
+    "viewer": "Viewer"
+  },
+  "RoleSummary": {
+    "owner": "Runs the organization: members, settings and everything else.",
+    "producer": "Plans productions, schedules, crew and equipment.",
+    "department_lead": "Edits blocks and equipment for their own department.",
+    "crew": "Sees assigned productions, acknowledges call times, comments and adds photos.",
+    "viewer": "Read-only access to everything."
+  },
+  "App": {
+    "nav": {
+      "label": "Primary",
+      "dashboard": "Dashboard"
+    },
+    "userMenu": {
+      "label": "Account menu",
+      "signedInAs": "Signed in as",
+      "signOut": "Sign out"
+    }
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}",
+    "welcomeNoName": "Welcome back",
+    "role": "Your role",
+    "organization": "Organization",
+    "productions": {
+      "title": "Productions you can see",
+      "count": "{count, plural, =0 {No productions yet} one {# production} other {# productions}}",
+      "empty": "No productions are visible to you yet.",
+      "dates": "{start} to {end}",
+      "noDates": "Dates not set",
+      "status": {
+        "planning": "Planning",
+        "scheduled": "Scheduled",
+        "shooting": "Shooting",
+        "wrapped": "Wrapped",
+        "archived": "Archived"
+      }
+    },
+    "rbac": {
+      "title": "What this role can do",
+      "intro": "These rules are enforced by the database as well as by the interface.",
+      "resource": "Area",
+      "allowed": "Allowed",
+      "notAllowed": "Not allowed",
+      "limitedTo": "Limited to {scope}",
+      "resources": {
+        "organization": "Organization",
+        "member": "Members",
+        "production": "Productions",
+        "shootDay": "Shoot days",
+        "block": "Schedule blocks",
+        "location": "Locations",
+        "crewMember": "Crew",
+        "equipment": "Equipment",
+        "comment": "Comments",
+        "attachment": "Attachments"
+      },
+      "actions": {
+        "read": "View",
+        "update": "Edit",
+        "create": "Create",
+        "delete": "Delete",
+        "invite": "Invite",
+        "changeRole": "Change roles",
+        "remove": "Remove",
+        "acknowledge": "Acknowledge call time",
+        "upload": "Upload"
+      },
+      "scopes": {
+        "department": "your department",
+        "assigned": "productions you're assigned to",
+        "own": "your own records"
+      }
+    }
+  },
+  "Onboarding": {
+    "title": "Set up your organization",
+    "body": "An organization holds your productions, crew and equipment. You'll be its owner and can invite colleagues later.",
+    "name": "Organization name",
+    "submit": "Create organization",
+    "submitting": "Creating…"
   }
 }

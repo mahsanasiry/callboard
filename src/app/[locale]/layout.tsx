@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import { SiteHeader } from '@/components/layout/site-header';
 import { ThemeInitScript } from '@/components/theme/theme-init-script';
 import { ThemeSync } from '@/components/theme/theme-sync';
 import { LOCALES, locales } from '@/i18n/locales';
@@ -58,8 +57,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
             {t('skipToContent')}
           </a>
           <ThemeSync />
-          <SiteHeader />
-          <main id="main-content">{children}</main>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
