@@ -23,6 +23,8 @@ const ERROR_BY_CODE: Record<string, FormErrorKey> = {
   email_provider_disabled: 'signupDisabled',
   session_not_found: 'sessionExpired',
   session_expired: 'sessionExpired',
+  reauthentication_needed: 'reauthRequired',
+  same_password: 'weakPassword',
   refresh_token_not_found: 'sessionExpired',
 };
 

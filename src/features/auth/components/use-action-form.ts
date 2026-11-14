@@ -22,11 +22,14 @@ export function useActionSubmit<TValues extends FieldValues>(
   const [formError, setFormError] = useState<FormErrorKey | null>(initialError);
   const [isPending, startTransition] = useTransition();
 
-  function submit(run: () => Promise<ActionResult>) {
+  function submit(run: () => Promise<ActionResult>, onOk?: () => void) {
     setFormError(null);
     startTransition(async () => {
       const result = await run();
-      if (result.status !== 'error') return;
+      if (result.status !== 'error') {
+        onOk?.();
+        return;
+      }
       if (result.formError) setFormError(result.formError);
       for (const [field, message] of Object.entries(result.fieldErrors ?? {})) {
         if (message === undefined) continue;

@@ -2,6 +2,8 @@
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useLocale, useTranslations } from 'next-intl';
+import { useTransition } from 'react';
+import { initialsOf } from '@/components/ui/avatar';
 import { signOutAction } from '@/features/auth/actions';
 
 interface UserMenuProps {
@@ -10,19 +12,10 @@ interface UserMenuProps {
   roleLabel: string;
 }
 
-function initialsOf(name: string, email: string): string {
-  const source = name.trim() || email;
-  const parts = source.split(/\s+/).filter(Boolean);
-  const letters = parts.length > 1 ? [parts[0], parts[parts.length - 1]] : [parts[0]];
-  return letters
-    .map((part) => (part ? Array.from(part)[0] : ''))
-    .join('')
-    .toUpperCase();
-}
-
 export function UserMenu({ displayName, email, roleLabel }: UserMenuProps) {
   const t = useTranslations('App.userMenu');
   const locale = useLocale();
+  const [isPending, startTransition] = useTransition();
 
   return (
     <DropdownMenu.Root>
@@ -47,16 +40,19 @@ export function UserMenu({ displayName, email, roleLabel }: UserMenuProps) {
             <p className="mt-1 text-sm text-ink-muted">{roleLabel}</p>
           </div>
           <DropdownMenu.Separator className="my-1 h-px bg-line" />
-          <form action={signOutAction.bind(null, locale)}>
-            <DropdownMenu.Item asChild>
-              <button
-                type="submit"
-                className="flex min-h-11 w-full cursor-pointer items-center rounded-md px-3 text-start outline-none data-[highlighted]:bg-sunken"
-              >
-                {t('signOut')}
-              </button>
-            </DropdownMenu.Item>
-          </form>
+          {/* A form inside the menu is removed from the page before it can submit, so the action is called directly. */}
+          <DropdownMenu.Item
+            disabled={isPending}
+            onSelect={(event) => {
+              event.preventDefault();
+              startTransition(async () => {
+                await signOutAction(locale);
+              });
+            }}
+            className="flex min-h-11 w-full cursor-pointer items-center rounded-md px-3 text-start outline-none data-[disabled]:opacity-60 data-[highlighted]:bg-sunken"
+          >
+            {t('signOut')}
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>

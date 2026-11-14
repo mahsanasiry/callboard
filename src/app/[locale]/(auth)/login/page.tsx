@@ -49,7 +49,7 @@ export default async function LoginPage(props: PageProps) {
         <LoginForm next={safeNextPath(single(query.next))} initialError={initialError} />
       </AuthCard>
       {demoEnabled ? (
-        <div className="rounded-xl border border-line bg-surface p-6">
+        <div className="card p-6">
           <DemoSignIn roles={DEMO_ROLES} />
         </div>
       ) : null}

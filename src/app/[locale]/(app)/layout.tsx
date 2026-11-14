@@ -5,6 +5,7 @@ import {
   getDisplayName,
 } from '@/features/organizations/queries';
 import { redirect } from '@/i18n/navigation';
+import { isAllowed } from '@/lib/permissions/policy';
 import { resolveLocale, type LocaleParams } from '@/i18n/resolve-locale';
 
 // Every page here depends on the signed-in person, so none of it can be built ahead of time.
@@ -30,6 +31,20 @@ export default async function AppLayout({ children, params }: AppLayoutProps) {
       email={user?.email ?? ''}
       role={membership?.role ?? null}
       organizationName={membership?.organization.name ?? null}
+      canSeeMembers={
+        membership !== null &&
+        user !== null &&
+        isAllowed(
+          {
+            userId: user.id,
+            role: membership.role,
+            departmentId: membership.departmentId,
+            assignedProductionIds: new Set(),
+          },
+          'member:read',
+          { ownerUserId: null },
+        )
+      }
     >
       {children}
     </AppShell>

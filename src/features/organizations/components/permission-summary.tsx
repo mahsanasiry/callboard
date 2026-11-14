@@ -10,6 +10,42 @@ import {
 
 const RESOURCES = Object.keys(ACTIONS) as Resource[];
 
+const ICON_PROPS = {
+  viewBox: '0 0 24 24',
+  className: 'size-4 shrink-0',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 2.4,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+  'aria-hidden': true,
+};
+
+function Check() {
+  return (
+    <svg {...ICON_PROPS} className="size-4 shrink-0 text-accent">
+      <path d="m5 12 5 5L20 7" />
+    </svg>
+  );
+}
+
+function Partial() {
+  return (
+    <svg {...ICON_PROPS}>
+      <circle cx="12" cy="12" r="8" />
+      <path d="M12 4v16" fill="currentColor" />
+    </svg>
+  );
+}
+
+function Minus() {
+  return (
+    <svg {...ICON_PROPS}>
+      <path d="M6 12h12" />
+    </svg>
+  );
+}
+
 export async function PermissionSummary({ role }: { role: Role }) {
   const t = await getTranslations('Dashboard.rbac');
   const format = await getFormatter();
@@ -25,57 +61,66 @@ export async function PermissionSummary({ role }: { role: Role }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-line bg-surface shadow-raised">
-      <table className="w-full min-w-[32rem] border-collapse text-start text-sm">
-        <thead>
-          <tr className="border-b border-line">
-            <th scope="col" className="px-4 py-3 text-start font-medium text-ink-muted">
-              {t('resource')}
-            </th>
-            <th scope="col" className="px-4 py-3 text-start font-medium text-ink-muted">
-              {t('title')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {RESOURCES.map((resource) => (
-            <tr key={resource} className="border-b border-line last:border-b-0">
-              <th scope="row" className="px-4 py-3 text-start align-top font-medium">
-                {t(`resources.${resource}`)}
-              </th>
-              <td className="px-4 py-3">
-                <ul className="flex flex-wrap gap-2">
-                  {ACTIONS[resource].map((action) => {
-                    const permission = `${resource}:${action}` as Permission;
-                    const grant = describeGrant(role, permission);
-                    const allowed = grant !== 'no';
-                    const label = t(`actions.${action}`);
-                    const detail =
-                      grant === 'yes'
-                        ? t('allowed')
-                        : grant === 'no'
-                          ? t('notAllowed')
-                          : t('limitedTo', { scope: scopeText(grant) });
-                    return (
-                      <li
-                        key={permission}
-                        className={`rounded-md border px-2.5 py-1 ${
-                          allowed
-                            ? 'border-line-strong bg-surface'
-                            : 'border-line bg-sunken text-ink-subtle line-through decoration-1'
-                        }`}
-                      >
-                        <span className="font-medium">{label}</span>
-                        <span className="ms-2 text-xs text-ink-muted no-underline">{detail}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="flex flex-col gap-3">
+      <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-muted" aria-hidden="true">
+        <li className="flex items-center gap-2">
+          <Check />
+          {t('allowed')}
+        </li>
+        <li className="flex items-center gap-2">
+          <Partial />
+          {t('limited')}
+        </li>
+        <li className="flex items-center gap-2">
+          <Minus />
+          {t('notAllowed')}
+        </li>
+      </ul>
+      <ul className="card divide-y divide-line">
+        {RESOURCES.map((resource) => (
+          <li
+            key={resource}
+            className="flex flex-col gap-2 px-5 py-4 first:rounded-t-xl last:rounded-b-xl hover:bg-raised md:grid md:grid-cols-[11rem_1fr] md:gap-6"
+          >
+            <p className="font-medium">{t(`resources.${resource}`)}</p>
+            <ul className="flex flex-wrap gap-2">
+              {ACTIONS[resource].map((action) => {
+                const permission = `${resource}:${action}` as Permission;
+                const grant = describeGrant(role, permission);
+                const label = t(`actions.${action}`);
+
+                if (grant === 'yes') {
+                  return (
+                    <li key={permission} className="chip chip-yes">
+                      <Check />
+                      <span>{label}</span>
+                      <span className="sr-only">{t('allowed')}</span>
+                    </li>
+                  );
+                }
+                if (grant === 'no') {
+                  return (
+                    <li key={permission} className="chip chip-no">
+                      <Minus />
+                      <span>{label}</span>
+                      <span className="sr-only">{t('notAllowed')}</span>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={permission} className="chip chip-limited">
+                    <Partial />
+                    <span className="font-medium">{label}</span>
+                    <span className="text-xs text-ink-muted">
+                      {t('limitedTo', { scope: scopeText(grant) })}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

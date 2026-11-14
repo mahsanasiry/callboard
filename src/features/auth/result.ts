@@ -10,6 +10,14 @@ export const FORM_ERROR_KEYS = [
   'sessionExpired',
   'confirmationFailed',
   'demoUnavailable',
+  'forbidden',
+  'lastOwner',
+  'soleOwner',
+  'demoProtected',
+  'invitationInvalid',
+  'invitationWrongAddress',
+  'alreadyMember',
+  'reauthRequired',
   'generic',
 ] as const;
 

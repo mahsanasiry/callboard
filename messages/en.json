@@ -69,7 +69,8 @@
       "system": "Match system",
       "reduce": "Reduce",
       "full": "Full"
-    }
+    },
+    "menu": "Appearance"
   },
   "Errors": {
     "title": "This page didn't load",
@@ -94,6 +95,12 @@
     },
     "organization": {
       "tooLong": "Use 120 characters or fewer."
+    },
+    "confirmation": {
+      "mismatch": "That doesn't match your email address."
+    },
+    "department": {
+      "required": "Choose a department for department leads, and none for other roles."
     }
   },
   "Auth": {
@@ -159,7 +166,15 @@
       "sessionExpired": "Your session has ended. Sign in again to continue.",
       "confirmationFailed": "That confirmation link isn't valid any more. Request a new one.",
       "demoUnavailable": "Demo sign-in isn't available right now.",
-      "generic": "Something went wrong on our side. Try again in a moment."
+      "generic": "Something went wrong on our side. Try again in a moment.",
+      "forbidden": "Your role doesn't allow this.",
+      "lastOwner": "An organization needs at least one owner. Make someone else an owner first.",
+      "soleOwner": "You're the only owner. Make someone else an owner before deleting your account.",
+      "demoProtected": "This is a shared demo account, so this change isn't allowed.",
+      "invitationInvalid": "This invitation is no longer valid. Ask for a new one.",
+      "invitationWrongAddress": "This invitation was sent to a different email address than the one you're signed in with.",
+      "alreadyMember": "You already belong to this organization.",
+      "reauthRequired": "For your security, sign in again before changing your password."
     }
   },
   "Roles": {
@@ -179,7 +194,9 @@
   "App": {
     "nav": {
       "label": "Primary",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "members": "Members",
+      "settings": "Settings"
     },
     "userMenu": {
       "label": "Account menu",
@@ -241,7 +258,8 @@
         "department": "your department",
         "assigned": "productions you're assigned to",
         "own": "your own records"
-      }
+      },
+      "limited": "Limited"
     }
   },
   "Onboarding": {
@@ -250,5 +268,118 @@
     "name": "Organization name",
     "submit": "Create organization",
     "submitting": "Creating…"
+  },
+  "Denied": {
+    "not-a-member": "You don't belong to this organization.",
+    "read-only-role": "Your role is read-only.",
+    "role-cannot": "Your role doesn't include this action.",
+    "other-department": "This belongs to a different department.",
+    "not-assigned": "You're not assigned to this production.",
+    "not-yours": "You can only do this for your own records."
+  },
+  "Settings": {
+    "title": "Settings",
+    "profile": {
+      "title": "Profile",
+      "name": "Display name",
+      "language": "Language",
+      "timeZone": "Time zone",
+      "submit": "Save profile",
+      "submitting": "Saving…",
+      "saved": "Profile saved."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "intro": "Choose which events create a notification for you.",
+      "assigned": "I'm assigned to a block",
+      "callTimeChanged": "A call time changes",
+      "conflict": "A scheduling conflict is detected",
+      "mention": "Someone mentions me in a comment",
+      "attachment": "A new attachment is added",
+      "submit": "Save notification settings",
+      "submitting": "Saving…",
+      "saved": "Notification settings saved."
+    },
+    "security": {
+      "title": "Password",
+      "intro": "Choose a new password for your account.",
+      "submit": "Change password",
+      "submitting": "Updating…",
+      "saved": "Password changed.",
+      "demoNote": "Demo accounts are shared, so their password can't be changed."
+    },
+    "danger": {
+      "title": "Delete account",
+      "intro": "Deleting your account removes your sign-in and your membership. Comments and uploads you made stay, without your name.",
+      "confirm": "Type your email address to confirm: {email}",
+      "button": "Delete my account",
+      "dialogTitle": "Delete your account?",
+      "dialogBody": "This can't be undone.",
+      "cancel": "Cancel",
+      "dialogConfirm": "Delete account",
+      "working": "Deleting…",
+      "demoNote": "Demo accounts are shared, so they can't be deleted."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "intro": "Choose a theme, an accent colour and how dense the interface feels. These apply on this device."
+    }
+  },
+  "Members": {
+    "title": "Members",
+    "intro": "Everyone who belongs to {organization}, and what each person can do.",
+    "noAccess": "You can't view the member list.",
+    "table": {
+      "name": "Name",
+      "role": "Role",
+      "department": "Department",
+      "actions": "Actions",
+      "noDepartment": "None",
+      "you": "You",
+      "unnamed": "Unnamed member"
+    },
+    "readOnly": "Only owners can change members.",
+    "change": {
+      "role": "Role",
+      "department": "Department",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved."
+    },
+    "remove": {
+      "button": "Remove",
+      "dialogTitle": "Remove {name}?",
+      "dialogBody": "They lose access to {organization} straight away.",
+      "cancel": "Cancel",
+      "confirm": "Remove member",
+      "working": "Removing…"
+    },
+    "invite": {
+      "title": "Invite someone",
+      "intro": "We don't send email from here yet. Create a link and share it yourself.",
+      "email": "Their email address",
+      "role": "Role",
+      "department": "Department",
+      "submit": "Create invitation link",
+      "submitting": "Creating…",
+      "linkTitle": "Invitation link",
+      "linkHint": "Share this link with the person you invited. It works once, for 14 days, and only with the email address you entered. You won't be able to see it again.",
+      "copy": "Copy link",
+      "copied": "Copied"
+    },
+    "pending": {
+      "title": "Pending invitations",
+      "empty": "No invitations are waiting.",
+      "expires": "Expires {date}",
+      "revoke": "Revoke",
+      "revoking": "Revoking…"
+    }
+  },
+  "Invite": {
+    "title": "You've been invited",
+    "body": "Accept to join the organization with the role set in the invitation. The invitation has to be for the email address you're signed in with.",
+    "accept": "Accept invitation",
+    "accepting": "Joining…",
+    "missing": "This invitation link is incomplete. Ask for a new one."
   }
 }

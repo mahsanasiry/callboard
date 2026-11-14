@@ -56,7 +56,7 @@ export default async function DesignPage(props: LocaleParams) {
         <h2 id="preferences" className="text-2xl font-semibold">
           {t('preferences')}
         </h2>
-        <div className="rounded-xl border border-line bg-surface p-5 shadow-raised">
+        <div className="card p-5">
           <ThemeControls />
         </div>
       </section>
@@ -87,7 +87,7 @@ export default async function DesignPage(props: LocaleParams) {
         <h2 id="typography" className="text-2xl font-semibold">
           {t('typography')}
         </h2>
-        <div className="flex flex-col gap-6 rounded-xl border border-line bg-surface p-5 shadow-raised">
+        <div className="card flex flex-col gap-6 p-5">
           <div className="flex flex-col gap-1">
             <span className="text-sm text-ink-subtle">{t('displayFace')}</span>
             <p className="font-display text-3xl font-semibold">{t('typographySample')}</p>

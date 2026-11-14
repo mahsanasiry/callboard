@@ -4,7 +4,8 @@ export const PASSWORD_MIN_LENGTH = 10;
 // bcrypt, which Supabase uses, ignores everything after 72 bytes.
 export const PASSWORD_MAX_LENGTH = 72;
 
-const email = z.string().trim().min(1, 'required').pipe(z.email('email.invalid'));
+export const emailField = z.string().trim().min(1, 'required').pipe(z.email('email.invalid'));
+const email = emailField;
 
 const newPassword = z
   .string()

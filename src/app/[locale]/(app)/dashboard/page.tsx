@@ -28,7 +28,7 @@ export default async function DashboardPage(props: LocaleParams) {
   if (!membership) {
     const onboarding = await getTranslations('Onboarding');
     return (
-      <div className="mx-auto flex max-w-lg flex-col gap-6 rounded-xl border border-line bg-surface p-6 shadow-raised sm:p-8">
+      <div className="card mx-auto flex max-w-lg flex-col gap-6 p-6 sm:p-8">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-semibold">{onboarding('title')}</h1>
           <p className="text-ink-muted">{onboarding('body')}</p>
@@ -47,24 +47,35 @@ export default async function DashboardPage(props: LocaleParams) {
   const formatDay = (value: string) =>
     format.dateTime(new Date(`${value}T00:00:00Z`), { dateStyle: 'medium', timeZone: 'UTC' });
 
+  const STATUS_COLOR = {
+    planning: 'var(--ds-ink-subtle)',
+    scheduled: 'var(--ds-accent)',
+    shooting: 'var(--ds-success)',
+    wrapped: 'var(--ds-ink-muted)',
+    archived: 'var(--ds-ink-subtle)',
+  } as const;
+
   return (
     <div className="flex flex-col gap-12">
-      <header className="flex flex-col gap-3">
-        <h1 className="text-4xl font-semibold">
+      <section
+        className="card flex flex-col gap-4 p-6 sm:p-8"
+        style={{
+          backgroundImage: 'linear-gradient(135deg, var(--ds-accent-soft), var(--ds-surface) 60%)',
+        }}
+      >
+        <p className="text-sm text-ink-muted">{membership.organization.name}</p>
+        <h1 className="text-4xl font-semibold sm:text-5xl">
           {displayName ? t('welcome', { name: displayName }) : t('welcomeNoName')}
         </h1>
-        <dl className="flex flex-wrap gap-x-8 gap-y-2 text-ink-muted">
-          <div className="flex gap-2">
-            <dt>{t('organization')}</dt>
-            <dd className="font-medium text-ink">{membership.organization.name}</dd>
-          </div>
-          <div className="flex gap-2">
-            <dt>{t('role')}</dt>
-            <dd className="font-medium text-ink">{roles(membership.role)}</dd>
-          </div>
-        </dl>
-        <p className="max-w-prose text-ink-muted">{summaries(membership.role)}</p>
-      </header>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="badge">
+            <span className="dot" style={{ color: 'var(--ds-accent)' }} aria-hidden="true" />
+            <span className="font-normal text-ink-muted">{t('role')}</span>
+            {roles(membership.role)}
+          </span>
+        </div>
+        <p className="max-w-prose text-lg text-ink-muted">{summaries(membership.role)}</p>
+      </section>
 
       <section aria-labelledby="productions-heading" className="flex flex-col gap-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -76,17 +87,34 @@ export default async function DashboardPage(props: LocaleParams) {
         {productions.length === 0 ? (
           <p className="notice">{t('productions.empty')}</p>
         ) : (
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <ul className="grid gap-4 sm:grid-cols-2">
             {productions.map((production) => (
-              <li
-                key={production.id}
-                className="flex flex-col gap-1 rounded-lg border border-line bg-surface p-4 shadow-raised"
-              >
-                <p className="text-lg font-semibold">{production.name}</p>
-                <p className="text-sm text-ink-muted">
-                  {t(`productions.status.${production.status}`)}
-                </p>
-                <p className="text-sm text-ink-subtle">
+              <li key={production.id} className="card flex flex-col gap-3 p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-display text-xl font-semibold">{production.name}</p>
+                  <span className="badge shrink-0">
+                    <span
+                      className="dot"
+                      style={{ color: STATUS_COLOR[production.status] }}
+                      aria-hidden="true"
+                    />
+                    {t(`productions.status.${production.status}`)}
+                  </span>
+                </div>
+                <p className="flex items-center gap-2 text-sm text-ink-muted">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="size-4 shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M3 10h18M8 3v4M16 3v4" />
+                  </svg>
                   {production.starts_on && production.ends_on
                     ? t('productions.dates', {
                         start: formatDay(production.starts_on),

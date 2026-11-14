@@ -12,6 +12,8 @@ export const VALIDATION_KEYS = [
   'password.tooLong',
   'password.mismatch',
   'organization.tooLong',
+  'confirmation.mismatch',
+  'department.required',
 ] as const;
 
 export type ValidationKey = (typeof VALIDATION_KEYS)[number];
