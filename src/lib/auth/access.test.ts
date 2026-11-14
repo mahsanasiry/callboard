@@ -26,6 +26,20 @@ describe('decideAccess', () => {
     });
   });
 
+  it('keeps the query string so an invitation survives the sign-in detour', () => {
+    expect(decideAccess('/invite', false, '?token=abc')).toEqual({
+      kind: 'redirect',
+      path: '/login?next=%2Finvite%3Ftoken%3Dabc',
+    });
+    expect(safeNextPath('/invite?token=abc')).toBe('/invite?token=abc');
+  });
+
+  it('protects every signed-in area', () => {
+    for (const path of ['/members', '/settings', '/invite']) {
+      expect(decideAccess(path, false).kind).toBe('redirect');
+    }
+  });
+
   it('does not treat lookalike paths as protected', () => {
     expect(decideAccess('/dashboards-are-nice', false)).toEqual({ kind: 'allow' });
   });

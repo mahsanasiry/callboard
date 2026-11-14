@@ -1,7 +1,7 @@
 import { locales, type Locale } from '@/i18n/locales';
 
 /** Paths, without the locale prefix, that need a signed-in user. */
-export const PROTECTED_PREFIXES = ['/dashboard'] as const;
+export const PROTECTED_PREFIXES = ['/dashboard', '/members', '/settings', '/invite'] as const;
 
 /** Paths that only make sense when signed out. */
 export const GUEST_ONLY_PATHS = ['/login', '/signup', '/forgot-password'] as const;
@@ -27,9 +27,9 @@ function startsWithSegment(path: string, prefix: string): boolean {
 export type AccessDecision =
   { readonly kind: 'allow' } | { readonly kind: 'redirect'; readonly path: string };
 
-export function decideAccess(path: string, isSignedIn: boolean): AccessDecision {
+export function decideAccess(path: string, isSignedIn: boolean, search = ''): AccessDecision {
   if (!isSignedIn && PROTECTED_PREFIXES.some((prefix) => startsWithSegment(path, prefix))) {
-    return { kind: 'redirect', path: `/login?next=${encodeURIComponent(path)}` };
+    return { kind: 'redirect', path: `/login?next=${encodeURIComponent(`${path}${search}`)}` };
   }
   if (isSignedIn && GUEST_ONLY_PATHS.some((guestPath) => startsWithSegment(path, guestPath))) {
     return { kind: 'redirect', path: DEFAULT_SIGNED_IN_PATH };

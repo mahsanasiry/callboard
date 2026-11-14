@@ -7,8 +7,8 @@
   --ds-font-ui: var(--font-instrument-sans), system-ui, sans-serif;
   --ds-font-display: var(--font-newsreader), Georgia, serif;
 
-  --ds-text-xs: 0.75rem;
-  --ds-text-sm: 0.875rem;
+  --ds-text-xs: 0.8125rem;
+  --ds-text-sm: 0.9375rem;
   --ds-text-base: 1rem;
   --ds-text-lg: 1.125rem;
   --ds-text-xl: 1.375rem;
@@ -52,35 +52,41 @@
 
 :root,
 :root[data-theme='light'] {
-  --ds-canvas: #f5f6f8;
+  --ds-canvas: #f3f4f8;
   --ds-surface: #ffffff;
-  --ds-sunken: #edeff3;
-  --ds-line: #dde0e7;
-  --ds-line-strong: #c3c8d3;
-  --ds-ink: #14171f;
-  --ds-ink-muted: #4a5160;
-  --ds-ink-subtle: #636b7b;
+  --ds-raised: #fafbfd;
+  --ds-sunken: #eaecf2;
+  --ds-line: #d9dde7;
+  --ds-line-strong: #b9c0cf;
+  --ds-ink: #12151c;
+  --ds-ink-muted: #444b5b;
+  --ds-ink-subtle: #5b6375;
   --ds-danger: #b42318;
   --ds-warning: #8a5a00;
   --ds-success: #14703a;
-  --ds-shadow-raised: 0 1px 2px rgb(20 23 31 / 0.06), 0 0 0 1px rgb(20 23 31 / 0.03);
-  --ds-shadow-overlay: 0 12px 32px rgb(20 23 31 / 0.14), 0 0 0 1px rgb(20 23 31 / 0.06);
+  --ds-glow: 0.1;
+  --ds-shadow-raised: 0 1px 2px rgb(18 21 28 / 0.05), 0 6px 20px rgb(18 21 28 / 0.05);
+  --ds-shadow-overlay: 0 14px 40px rgb(18 21 28 / 0.16), 0 0 0 1px rgb(18 21 28 / 0.06);
 }
 
 :root[data-theme='dark'] {
-  --ds-canvas: #0e1117;
-  --ds-surface: #151a23;
-  --ds-sunken: #0a0d12;
-  --ds-line: #252c39;
-  --ds-line-strong: #384154;
-  --ds-ink: #eef0f5;
-  --ds-ink-muted: #b4bbc9;
-  --ds-ink-subtle: #8f98aa;
+  --ds-canvas: #0b0e14;
+  --ds-surface: #141925;
+  --ds-raised: #1b2232;
+  --ds-sunken: #080a10;
+  --ds-line: #273146;
+  --ds-line-strong: #3b4863;
+  --ds-ink: #eef0f6;
+  --ds-ink-muted: #b8c0d0;
+  --ds-ink-subtle: #939db2;
   --ds-danger: #ff8a80;
   --ds-warning: #f5c15c;
   --ds-success: #5ed68a;
-  --ds-shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4), 0 0 0 1px rgb(255 255 255 / 0.03);
-  --ds-shadow-overlay: 0 16px 40px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.06);
+  --ds-glow: 0.16;
+  --ds-shadow-raised: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 10px 28px rgb(0 0 0 / 0.38);
+  --ds-shadow-overlay:
+    inset 0 1px 0 rgb(255 255 255 / 0.06), 0 18px 48px rgb(0 0 0 / 0.6),
+    0 0 0 1px rgb(255 255 255 / 0.07);
 }
 
 :root,
@@ -125,6 +131,14 @@
 :root[data-theme='dark'][data-accent='rose'] {
   --ds-accent: #ff8fad;
   --ds-accent-fg: #0e1117;
+}
+
+:root {
+  --ds-accent-soft: color-mix(
+    in oklab,
+    var(--ds-accent) calc(var(--ds-glow) * 100%),
+    var(--ds-surface)
+  );
 }
 
 :root[data-motion='reduce'] {
