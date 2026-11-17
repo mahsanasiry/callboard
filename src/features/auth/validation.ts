@@ -14,6 +14,8 @@ export const VALIDATION_KEYS = [
   'organization.tooLong',
   'confirmation.mismatch',
   'department.required',
+  'name.taken',
+  'text.tooLong',
 ] as const;
 
 export type ValidationKey = (typeof VALIDATION_KEYS)[number];
