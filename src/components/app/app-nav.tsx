@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from '@/i18n/navigation';
 
-type NavHref = '/dashboard' | '/members' | '/settings';
+type NavHref = '/dashboard' | '/equipment' | '/crew' | '/members' | '/settings';
 
 interface AppNavProps {
   label: string;
@@ -16,6 +16,19 @@ const ICONS: Record<NavHref, React.ReactNode> = {
       <rect x="14" y="3" width="7" height="5" rx="1.5" />
       <rect x="14" y="12" width="7" height="9" rx="1.5" />
       <rect x="3" y="16" width="7" height="5" rx="1.5" />
+    </>
+  ),
+  '/equipment': (
+    <>
+      <rect x="3" y="7" width="18" height="12" rx="2" />
+      <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7M3 12h18" />
+    </>
+  ),
+  '/crew': (
+    <>
+      <circle cx="8" cy="8" r="3" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M2.5 20c.5-3.2 2.8-4.8 5.5-4.8s5 1.6 5.5 4.8M14.5 15.6c.8-.3 1.6-.4 2.5-.4 2.2 0 3.9 1.3 4.4 4" />
     </>
   ),
   '/members': (

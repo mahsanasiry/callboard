@@ -1,6 +1,14 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 import { demoEmail } from '../src/features/auth/demo';
+import {
+  DEMO_CREW,
+  DEMO_EQUIPMENT,
+  DEPARTMENT_NAMES,
+  crewEmail,
+  crewPhone,
+  type DepartmentName,
+} from './demo-data';
 import type { Role } from '../src/lib/permissions/policy';
 
 const env = z
@@ -17,9 +25,8 @@ const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_
 });
 
 const ORGANIZATION = { name: 'Harbour Light Films', slug: 'harbour-light-demo' };
-const DEPARTMENTS = ['Camera', 'Sound', 'Art'] as const;
 
-const PEOPLE: readonly { role: Role; name: string; department?: (typeof DEPARTMENTS)[number] }[] = [
+const PEOPLE: readonly { role: Role; name: string; department?: DepartmentName }[] = [
   { role: 'owner', name: 'Noor Vance' },
   { role: 'producer', name: 'Imani Brandt' },
   { role: 'department_lead', name: 'Tomas Lindqvist', department: 'Camera' },
@@ -67,6 +74,15 @@ async function ensureUser(
   return data.user.id;
 }
 
+async function rows(
+  query: PromiseLike<{ data: unknown; error: { message: string } | null }>,
+  step: string,
+): Promise<unknown> {
+  const { data, error } = await query;
+  if (error) fail(step, error);
+  return data;
+}
+
 async function firstId(
   query: PromiseLike<{ data: unknown; error: { message: string } | null }>,
   step: string,
@@ -93,7 +109,7 @@ async function main(): Promise<void> {
   }
 
   const departmentIds = new Map<string, string>();
-  for (const name of DEPARTMENTS) {
+  for (const name of DEPARTMENT_NAMES) {
     let id = await firstId(
       supabase
         .from('departments')
@@ -211,7 +227,101 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log(`Demo organization "${ORGANIZATION.name}" is ready with ${PEOPLE.length} accounts:`);
+  const departmentFor = (name: DepartmentName | null) =>
+    name ? (departmentIds.get(name) ?? null) : null;
+
+  const existingEquipment = new Set(
+    z
+      .array(z.object({ name: z.string() }))
+      .parse(
+        await rows(
+          supabase.from('equipment_items').select('name').eq('organization_id', organizationId),
+          'list equipment',
+        ),
+      )
+      .map((row) => row.name.toLowerCase()),
+  );
+  const newEquipment = DEMO_EQUIPMENT.filter(
+    (item) => !existingEquipment.has(item.name.toLowerCase()),
+  ).map((item) => ({
+    organization_id: organizationId,
+    name: item.name,
+    category: item.category,
+    department_id: departmentFor(item.department),
+    status: item.status,
+    asset_tag: item.assetTag,
+    notes: item.notes ?? '',
+  }));
+  if (newEquipment.length > 0) {
+    const { error } = await supabase.from('equipment_items').insert(newEquipment);
+    if (error) fail('create equipment', error);
+  }
+
+  const existingCrew = new Set(
+    z
+      .array(z.object({ full_name: z.string() }))
+      .parse(
+        await rows(
+          supabase.from('crew_members').select('full_name').eq('organization_id', organizationId),
+          'list crew',
+        ),
+      )
+      .map((row) => row.full_name.toLowerCase()),
+  );
+  const newCrew = DEMO_CREW.map((person, index) => ({ person, index }))
+    .filter(({ person }) => !existingCrew.has(person.name.toLowerCase()))
+    .map(({ person, index }) => ({
+      organization_id: organizationId,
+      full_name: person.name,
+      role_title: person.title,
+      department_id: departmentFor(person.department),
+      preferred_locale: person.locale,
+      email: crewEmail(person.name),
+      phone: crewPhone(index),
+    }));
+  if (newCrew.length > 0) {
+    const { error } = await supabase.from('crew_members').insert(newCrew);
+    if (error) fail('create crew', error);
+  }
+
+  // Half of the demo crew work on the first production; crew accounts see only those they are on.
+  const firstProduction = await firstId(
+    supabase
+      .from('productions')
+      .select('id')
+      .eq('organization_id', organizationId)
+      .eq('name', PRODUCTIONS[0].name)
+      .limit(1),
+    'find first production',
+  );
+  const crewRows = z
+    .array(z.object({ id: z.string(), full_name: z.string() }))
+    .parse(
+      await rows(
+        supabase.from('crew_members').select('id, full_name').eq('organization_id', organizationId),
+        'list crew',
+      ),
+    );
+  const onProduction = new Set(
+    DEMO_CREW.slice(0, Math.ceil(DEMO_CREW.length / 2)).map((person) => person.name),
+  );
+  if (firstProduction) {
+    const links = crewRows
+      .filter((row) => onProduction.has(row.full_name))
+      .map((row) => ({
+        organization_id: organizationId,
+        production_id: firstProduction,
+        crew_member_id: row.id,
+      }));
+    const { error } = await supabase
+      .from('production_crew')
+      .upsert(links, { onConflict: 'production_id,crew_member_id' });
+    if (error) fail('assign demo crew', error);
+  }
+
+  console.log(
+    `Demo organization "${ORGANIZATION.name}" is ready: ${PEOPLE.length} accounts, ${DEMO_EQUIPMENT.length} equipment items, ${DEMO_CREW.length} crew members.`,
+  );
   for (const person of PEOPLE) {
     console.log(`  ${person.role.padEnd(16)} ${demoEmail(env.DEMO_EMAIL_TEMPLATE, person.role)}`);
   }

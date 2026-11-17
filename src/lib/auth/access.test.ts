@@ -35,7 +35,7 @@ describe('decideAccess', () => {
   });
 
   it('protects every signed-in area', () => {
-    for (const path of ['/members', '/settings', '/invite']) {
+    for (const path of ['/members', '/settings', '/invite', '/equipment', '/crew']) {
       expect(decideAccess(path, false).kind).toBe('redirect');
     }
   });

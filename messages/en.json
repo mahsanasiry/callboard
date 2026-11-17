@@ -86,7 +86,8 @@
       "invalid": "Enter a valid email address."
     },
     "name": {
-      "tooLong": "Use 80 characters or fewer."
+      "tooLong": "Use 80 characters or fewer.",
+      "taken": "Another item already uses this name."
     },
     "password": {
       "tooShort": "Use at least {min, number} characters.",
@@ -101,6 +102,9 @@
     },
     "department": {
       "required": "Choose a department for department leads, and none for other roles."
+    },
+    "text": {
+      "tooLong": "This is too long."
     }
   },
   "Auth": {
@@ -196,7 +200,9 @@
       "label": "Primary",
       "dashboard": "Dashboard",
       "members": "Members",
-      "settings": "Settings"
+      "settings": "Settings",
+      "equipment": "Equipment",
+      "crew": "Crew"
     },
     "userMenu": {
       "label": "Account menu",
@@ -381,5 +387,145 @@
     "accept": "Accept invitation",
     "accepting": "Joining…",
     "missing": "This invitation link is incomplete. Ask for a new one."
+  },
+  "List": {
+    "search": "Search",
+    "filterBy": "Filter by {filter}",
+    "activeFilters": "Active filters",
+    "removeFilter": "Remove filter {filter}: {value}",
+    "clearAll": "Clear all",
+    "pagination": "Pagination",
+    "range": "{from, number}–{to, number} of {total, number}",
+    "pageSize": "Rows per page",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page, number} of {pages, number}",
+    "sortBy": "Sort by {column}",
+    "noResults": "Nothing matches your search and filters.",
+    "clearFilters": "Clear search and filters",
+    "loading": "Updating…"
+  },
+  "Equipment": {
+    "title": "Equipment",
+    "intro": "Everything the crew shoots, lights and records with.",
+    "new": "New equipment",
+    "back": "Back to equipment",
+    "columns": {
+      "name": "Name",
+      "category": "Category",
+      "department": "Department",
+      "status": "Status",
+      "updated": "Updated"
+    },
+    "filters": {
+      "status": "Status",
+      "category": "Category",
+      "department": "Department",
+      "archive": "Show",
+      "archiveOnly": "Archived only"
+    },
+    "categories": {
+      "camera": "Camera",
+      "lenses": "Lenses",
+      "grip": "Grip",
+      "lighting": "Lighting",
+      "sound": "Sound",
+      "art": "Art",
+      "power": "Power",
+      "other": "Other"
+    },
+    "statuses": {
+      "available": "Available",
+      "in_use": "In use",
+      "maintenance": "In maintenance",
+      "retired": "Retired"
+    },
+    "noDepartment": "No department",
+    "assetTag": "Asset tag {tag}",
+    "archivedBadge": "Archived",
+    "empty": {
+      "title": "No equipment yet",
+      "body": "Add the first item so it can be assigned to schedule blocks."
+    },
+    "form": {
+      "createTitle": "New equipment",
+      "editTitle": "Edit equipment",
+      "name": "Name",
+      "category": "Category",
+      "status": "Status",
+      "department": "Department",
+      "assetTag": "Asset tag",
+      "notes": "Notes",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "readOnly": "You can view this item but not change it.",
+      "checking": "Checking the name…"
+    },
+    "archive": {
+      "button": "Archive",
+      "title": "Archive {name}?",
+      "body": "It disappears from the lists and can't be added to new blocks. You can restore it later.",
+      "confirm": "Archive",
+      "working": "Archiving…",
+      "cancel": "Cancel",
+      "isArchived": "This item is archived.",
+      "restore": "Restore",
+      "restoring": "Restoring…"
+    }
+  },
+  "Crew": {
+    "title": "Crew",
+    "intro": "The people who work on your productions, with their roles and contact details.",
+    "new": "New crew member",
+    "back": "Back to crew",
+    "columns": {
+      "name": "Name",
+      "title": "Role",
+      "department": "Department",
+      "language": "Language",
+      "contact": "Contact",
+      "updated": "Updated"
+    },
+    "filters": {
+      "department": "Department",
+      "language": "Language",
+      "archive": "Show",
+      "archiveOnly": "Archived only"
+    },
+    "noDepartment": "No department",
+    "noContact": "No contact details",
+    "hasAccount": "Has an account",
+    "archivedBadge": "Archived",
+    "empty": {
+      "title": "No crew yet",
+      "body": "Add the first person so they can be assigned to productions and schedule blocks."
+    },
+    "form": {
+      "createTitle": "New crew member",
+      "editTitle": "Edit crew member",
+      "fullName": "Full name",
+      "roleTitle": "Role on set",
+      "department": "Department",
+      "email": "Email",
+      "phone": "Phone",
+      "language": "Preferred language",
+      "notes": "Notes",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "readOnly": "You can view this person but not change their details."
+    },
+    "archive": {
+      "button": "Archive",
+      "title": "Archive {name}?",
+      "body": "They disappear from the lists and can't be assigned to new blocks. You can restore them later.",
+      "confirm": "Archive",
+      "working": "Archiving…",
+      "cancel": "Cancel",
+      "isArchived": "This person is archived.",
+      "restore": "Restore",
+      "restoring": "Restoring…"
+    }
   }
 }

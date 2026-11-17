@@ -29,6 +29,8 @@ export function AppShell({
 
   const items = [
     { href: '/dashboard' as const, label: t('nav.dashboard') },
+    { href: '/crew' as const, label: t('nav.crew') },
+    { href: '/equipment' as const, label: t('nav.equipment') },
     ...(canSeeMembers ? [{ href: '/members' as const, label: t('nav.members') }] : []),
     { href: '/settings' as const, label: t('nav.settings') },
   ];

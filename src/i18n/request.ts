@@ -8,5 +8,6 @@ export default getRequestConfig(async () => {
   if (!isLocale(locale)) notFound();
 
   const messages = (await import(`../../messages/${locale}.json`)) as { default: object };
-  return { locale, messages: messages.default };
+  // One zone for every render keeps server and browser output identical; people's own zone comes later.
+  return { locale, messages: messages.default, timeZone: 'UTC' };
 });

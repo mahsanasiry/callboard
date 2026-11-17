@@ -14,10 +14,11 @@ This repository is built in phases. Done so far:
 - Authentication: sign up, sign in, sign out, password reset and email confirmation, protected routes, and one-click demo accounts for each role
 - Account settings: profile, language and time zone, notification preferences, password change and account deletion
 - Members: owners invite people with a one-time link, change roles and remove members; invitations are bound to an email address and expire
+- Equipment and crew: searchable, filterable, sortable lists with the state kept in the address, numbered pages, create, edit and archive with confirmation, and restore for owners and producers
 - Application shell: a signed-in dashboard that shows the person's organisation, role, the productions they can see, and what the role may do, read from the same policy the database is tested against
 - Quality gates: lint, logical-property check, locale completeness check, unit tests, database tests and a CI workflow
 
-Not built yet: avatar upload, the remaining application screens, the schedule timeline, real-time updates, offline support, the remaining twenty languages, end-to-end tests. They are in the roadmap and nothing in this README claims them.
+Not built yet: avatar upload, productions and shoot days, locations, the schedule, the schedule timeline, real-time updates, offline support, the remaining twenty languages, end-to-end tests. They are in the roadmap and nothing in this README claims them.
 
 ## Requirements
 
@@ -56,7 +57,7 @@ Open http://localhost:3100. Copy `.env.example` to `.env.local` if you need to c
 
 ### Demo accounts
 
-Set `DEMO_EMAIL_TEMPLATE`, `DEMO_ACCOUNT_PASSWORD` and, temporarily, `SUPABASE_SECRET_KEY` in `.env.local`, then run `pnpm seed:demo`. It creates the demo organisation, one confirmed account per role and two productions, and can be run again safely. The sign-in buttons on the login page appear only when the first two variables are set. The secret key is used by the seed script alone and must never be set on the deployed site.
+Set `DEMO_EMAIL_TEMPLATE`, `DEMO_ACCOUNT_PASSWORD` and, temporarily, `SUPABASE_SECRET_KEY` in `.env.local`, then run `pnpm seed:demo`. It creates the demo organisation, one confirmed account per role, two productions, 46 equipment items and 34 crew members, and can be run again safely. The sign-in buttons on the login page appear only when the first two variables are set. The secret key is used by the seed script alone and must never be set on the deployed site.
 
 ## Database
 

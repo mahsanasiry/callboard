@@ -1,7 +1,14 @@
 import { locales, type Locale } from '@/i18n/locales';
 
 /** Paths, without the locale prefix, that need a signed-in user. */
-export const PROTECTED_PREFIXES = ['/dashboard', '/members', '/settings', '/invite'] as const;
+export const PROTECTED_PREFIXES = [
+  '/dashboard',
+  '/equipment',
+  '/crew',
+  '/members',
+  '/settings',
+  '/invite',
+] as const;
 
 /** Paths that only make sense when signed out. */
 export const GUEST_ONLY_PATHS = ['/login', '/signup', '/forgot-password'] as const;
