@@ -33,7 +33,7 @@ export default async function proxy(request: NextRequest) {
   const { locale, path } = splitLocale(request.nextUrl.pathname);
   if (!locale) return response;
 
-  const decision = decideAccess(path, Boolean(data?.claims));
+  const decision = decideAccess(path, Boolean(data?.claims), request.nextUrl.search);
   if (decision.kind === 'allow') return response;
 
   const redirect = NextResponse.redirect(new URL(`/${locale}${decision.path}`, request.url));

@@ -77,3 +77,42 @@ export async function runAsAnonymous(db: PGlite, sql: string): Promise<Outcome> 
     await db.exec('rollback');
   }
 }
+
+/** Runs several statements as one user in a single transaction that is rolled back at the end. */
+export async function runSequenceAs(
+  db: PGlite,
+  userId: string | null,
+  statements: readonly string[],
+): Promise<Outcome[]> {
+  const outcomes: Outcome[] = [];
+  await db.exec('begin');
+  try {
+    await db.exec('set local role authenticated');
+    if (userId !== null) {
+      await db.query(`select set_config('request.jwt.claim.sub', $1, true)`, [userId]);
+    }
+    for (const statement of statements) {
+      try {
+        const result = await db.query<Record<string, unknown>>(statement);
+        outcomes.push({
+          ok: true,
+          rows: result.rows,
+          affected: Math.max(result.affectedRows ?? 0, result.rows.length),
+          error: null,
+        });
+      } catch (error) {
+        outcomes.push({
+          ok: false,
+          rows: [],
+          affected: 0,
+          error: error instanceof Error ? error.message : String(error),
+        });
+        // A failed statement aborts the transaction; later statements would all fail.
+        break;
+      }
+    }
+  } finally {
+    await db.exec('rollback');
+  }
+  return outcomes;
+}

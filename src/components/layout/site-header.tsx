@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { LocaleSwitcher } from '@/components/i18n/locale-switcher';
+import { ThemeMenu } from '@/components/theme/theme-menu';
 import { Link } from '@/i18n/navigation';
 import { Wordmark } from './wordmark';
 
@@ -20,6 +21,7 @@ export function SiteHeader() {
             {t('signIn')}
           </Link>
           <LocaleSwitcher />
+          <ThemeMenu />
         </nav>
       </div>
     </header>

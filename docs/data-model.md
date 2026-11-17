@@ -31,6 +31,9 @@ erDiagram
 - A crew member is a person on the crew list. They may or may not have an account (`user_id`). Crew accounts see productions through `production_crew`.
 - `schedule_blocks.version` increases on every update. The interface sends the version it last saw, which is how a concurrent edit is detected.
 - Soft deletion uses `deleted_at`. Archived productions, shoot days, locations and crew members are hidden from everyone except owners and producers. Blocks and attachments stay visible to whoever may edit them (see ADR 0004).
+- `profiles.is_demo` marks the shared demo accounts. Their memberships cannot be changed through the API, they cannot delete themselves, and people cannot edit the flag: `authenticated` only has update rights on the preference columns.
+- Invitations store the SHA-256 hash of a one-time token, never the token. `accept_invitation()` checks the hash, the expiry and that the signed-in email matches the invited one before it creates the membership.
+- `delete_my_account()` removes the sign-in and the membership. Content the person wrote stays with the author set to null; the last owner of an organisation cannot delete their account.
 - `profiles` is filled by a trigger when an account is created. `create_organization()` is the only way to create an organisation, because it also creates the owner membership in the same step.
 
 Not modelled yet: notifications, activity events, bookmarks and saved views. They arrive with the features that use them, each with its own row level security and tests.

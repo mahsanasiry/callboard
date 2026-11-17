@@ -77,11 +77,7 @@ export async function ScheduleSketch() {
     });
 
   return (
-    <figure
-      role="img"
-      aria-label={t('label')}
-      className="rounded-xl border border-line bg-surface p-4 shadow-raised sm:p-5"
-    >
+    <figure role="img" aria-label={t('label')} className="card p-4 sm:p-5">
       <div
         aria-hidden="true"
         className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-3 gap-y-2 sm:grid-cols-[5.5rem_minmax(0,1fr)]"

@@ -124,6 +124,13 @@ async function main(): Promise<void> {
     );
     userIds.set(person.role, userId);
 
+    // Shared accounts are protected from password changes, deletion and role changes.
+    const { error: flagError } = await supabase
+      .from('profiles')
+      .update({ is_demo: true })
+      .eq('id', userId);
+    if (flagError) fail(`flag ${person.role} as demo`, flagError);
+
     const departmentId =
       person.role === 'department_lead' && person.department
         ? (departmentIds.get(person.department) ?? null)
